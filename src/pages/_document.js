@@ -21,14 +21,19 @@ export default class MyDocument extends Document {
     return { ...page, styleTags };
   }
 
-  render () {    
-    return (
-      <Html>
-        <Head>
-          {/* Step 5: Output the styles in the head  */}
-          {this.props.styleTags}
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;1,100&display=swap" />
-        </Head>
+    render () {
+        return (
+            <Html>
+                <Head>
+                {/* Step 5: Output the styles in the head  */}
+                {this.props.styleTags}
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;1,100&display=swap" />
+                <meta 
+                    name="description" 
+                    content="Portfolio created to expose my projects, created using ReactJS and Redux and other technologies"
+                />
+                <title>Paulo Ricardo - Dev Web</title>
+            </Head>
         <body style={{ margin: 0, fontFamily: "Roboto, sans-serif" }}>
           <Main />
           <NextScript />
