@@ -1,15 +1,13 @@
 import React from 'react';
-
 import styled from 'styled-components';
-
 import Link from 'next/link';
-
 import { FaPaperclip } from 'react-icons/fa';
 import { SiWhatsapp } from 'react-icons/si';
 import { FiInstagram } from 'react-icons/fi';
 import { GrLinkedinOption } from 'react-icons/gr';
 import { GoMarkGithub } from 'react-icons/go';
 import { HiDocumentReport } from 'react-icons/hi';
+import { connect } from 'react-redux';
 
 const ListLinks = styled.ul`
 
@@ -169,7 +167,7 @@ const CurrIcon = styled(HiDocumentReport)`
 `;
 
 
-const Links = () => {
+const Links = ({ language }) => {
 
     const moveScroll = () => {
         document.documentElement.scrollTop = 0;
@@ -211,7 +209,11 @@ const Links = () => {
                 Github
             </ListOption>
             <ListOption>
-                <a href="https://drive.google.com/file/d/1aD04oiSa0sFHRFoLLXLe99oCiwb3lPTK/view?usp=sharing"
+                <a href={
+                    language === "English" 
+                        ? "https://drive.google.com/file/d/10fqd9E9bn2xlZk1BP6i9H6KdqucKiiEn/view?usp=sharing"
+                        : "https://drive.google.com/file/d/1Aj2PQNFAWB1w4-gGA3Oii0tXBnUPOJy1/view?usp=sharing"
+                }
                     target="_blank" rel="noopener noreferrer">
                         <CurrIcon size="30"  />
                 </a>
@@ -221,4 +223,10 @@ const Links = () => {
     );
 }
 
-export default Links;
+const mapStateToProps = state => {
+    return { 
+        language: state.language.language
+    }
+}
+
+export default connect(mapStateToProps, {})(Links);

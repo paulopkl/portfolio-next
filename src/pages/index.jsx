@@ -34,7 +34,6 @@ const Card = styled.div`
 `;
 
 const Main = styled.main`
-
   margin: 0;
   background: linear-gradient(135deg,rgb(80, 150, 255),rgb(40, 96, 179),rgb(12, 49, 94),
   rgb(0, 15, 58));
@@ -43,15 +42,12 @@ const Main = styled.main`
   -moz-background: linear-gradient(135deg,rgb(80, 150, 255),rgb(40, 96, 179),rgb(12, 49, 94),
   rgb(0, 15, 58));
   padding-bottom: 4rem;
-
 `;
 
 const CardModal = styled(Modal)`
-
   display: flex;
   align-items: center;
   justify-content: center;
-
 `;
 
 const Content = styled.div`
@@ -110,50 +106,50 @@ const Img = styled(Image)`
 `;
 
 const Option = styled.li`
-  list-style: none;
-  align-items: center;
-  padding: 3rem;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+    list-style: none;
+    align-items: center;
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 
-  @media(max-width: 720px) {
-    padding: 1rem;
-  }
-  
-  @media(max-width: 720px) {
-    padding: 0rem;
-  }
+    @media(max-width: 720px) {
+        padding: 1rem;
+    }
+
+    @media(max-width: 720px) {
+        padding: 0rem;
+    }
 `;
 
 const Select = styled.ul`
-  padding: 0;
-  display: flex;
-  justify-content: space-evenly;
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
 `;
 
 const Title = styled.h1`
-  text-align: center;
-  padding-top: 2rem;
-  font-size: 3rem;
-  font-family: "Roboto";
-  text-shadow: 1px 1px 1px rgb(34, 89, 214);
-  color: ${props => props.color ? props.color : ''};
+    text-align: center;
+    padding-top: 2rem;
+    font-size: 3rem;
+    font-family: "Roboto";
+    text-shadow: 1px 1px 1px rgb(34, 89, 214);
+    color: ${props => props.color ? props.color : ''};
 
-  @media(max-width: 510px) { font-size: 2rem; }
+    @media(max-width: 510px) { font-size: 2rem; }
 `;
 
 const SubTitle = styled.p`
-  font-size: 1.5rem;
-  font-family: "Roboto";
-  font-weight: 500;
-  letter-spacing: 5px;
-  color: ${props => props.color ? props.color : ''};
+    font-size: 1.5rem;
+    font-family: "Roboto";
+    font-weight: 500;
+    letter-spacing: 5px;
+    color: ${props => props.color ? props.color : ''};
 
-  @media(max-width: 470px) {
-    font-size: 1rem;
-    letter-spacing: 1px;
-  }
+    @media(max-width: 470px) {
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
 `;
 
 const ButtonLanguage = styled.button`
@@ -174,32 +170,30 @@ const ImgIcon = styled(Image)`
     height: 87%;
     border: 2px solid #444;
     border-radius: 50%;
-    box-shadow: ${props => props.isSelected ? 
-      '3px 10px 20px rgb(34, 89, 214), -1px -1px 40px rgb(160, 62, 177)' : ''};
+    box-shadow: ${props => props.isSelected ? '3px 10px 20px rgb(34, 89, 214), -1px -1px 40px rgb(160, 62, 177)' : ''};
 `;
 
 const MainComponent = props => {
-  const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-  const changeLang = (lang) => {
-    console.log(lang);
-    props.changeLanguage(lang);
-    setOpen(false);
-  };
+    const changeLang = (lang) => {
+        props.changeLanguage(lang);
+        setOpen(false);
+    };
 
-  useEffect(() => {
-    setOpen(true);
-  }, []);
+    useEffect(() => {
+        setOpen(true);
+    }, []);
 
-  return (
+    return (
         <Main>
             <div>
                 <ButtonLanguage type="button" onClick={handleOpen}>

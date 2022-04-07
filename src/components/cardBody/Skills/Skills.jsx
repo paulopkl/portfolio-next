@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SiPhp, SiNextDotJs, SiRedux, SiWebpack, SiMongodb, SiMysql, SiStyledComponents, SiMaterialUi,
-    SiJquery, SiJavascript, SiBootstrap, SiTypescript, SiExpo, SiDocker, SiCsharp } from 'react-icons/si';
-import { FaWordpress, FaNode, FaServer, FaGulp, FaReact, FaAngular, FaHtml5 } from 'react-icons/fa';
+import { 
+    SiPhp, SiNextDotJs, SiRedux, SiWebpack, SiMongodb, SiMysql, SiStyledComponents, SiMaterialUi,
+    SiJquery, SiJavascript, SiBootstrap, SiTypescript, SiExpo, SiDocker, SiCsharp, SiKubernetes, SiTailwindcss, SiPostgresql 
+} from 'react-icons/si';
+import { FaWordpress, FaNode, FaServer, FaGulp, FaReact, FaAngular, FaHtml5, FaAws } from 'react-icons/fa';
 import { IoLogoCss3 } from 'react-icons/io';
 import { AiTwotoneApi } from 'react-icons/ai';
 import { DiSass, DiMaterializecss, DiDotnet } from 'react-icons/di';
@@ -51,6 +53,7 @@ const MatCss = styled(DiMaterializecss)` margin-bottom: 10px; `;
 const MatUi = styled(SiMaterialUi)` margin-bottom: 10px; `;
 const Node = styled(FaNode)` margin-bottom: 10px; `;
 const Server = styled(FaServer)` margin-bottom: 10px; `;
+const Postgresql = styled(SiPostgresql)` margin-bottom: 10px; `;
 const Mysql = styled(SiMysql)` margin-bottom: 10px; `;
 const Mongo = styled(SiMongodb)` margin-bottom: 10px; `;
 const Gulp = styled(FaGulp)` margin-bottom: 10px; `;
@@ -68,6 +71,9 @@ const Docker = styled(SiDocker)` margin-bottom: 10px; `;
 const CSharp = styled(SiCsharp)` margin-bottom: 10px; `;
 const Dotnet = styled(DiDotnet)` margin-bottom: 10px; `;
 const Flutter = styled(RiFlutterFill)` margin-bottom: 10px; `;
+const Kubernetes = styled(SiKubernetes)` margin-bottom: 10px; `;
+const AWS = styled(FaAws)` margin-bottom: 10px; `;
+const Tailwindcss = styled(SiTailwindcss)` margin-bottom: 10px; `;
 
 const Skills = () => (
     <ListSkills>
@@ -76,9 +82,6 @@ const Skills = () => (
         </Tec>
         <Tec>
             <Css size="30" /> CSS
-        </Tec>
-        <Tec>
-            <Php size="30" /> PHP
         </Tec>
         <Tec>
             <Js size="30" /> JavaScript
@@ -102,13 +105,16 @@ const Skills = () => (
             <GraphQL size="30" /> GraphQL
         </Tec>
         <Tec>
-            <StyledComps size="30" /> Styled-Components
-        </Tec>
-        <Tec>
             <Nextjs size="30" /> NextJS
         </Tec>
         <Tec>
             <Docker size="30" /> Docker
+        </Tec>
+        <Tec>
+            <Kubernetes size="30" /> Kubernetes
+        </Tec>
+        <Tec>
+            <AWS size="30" /> AWS
         </Tec>
         <Tec>
             <Expo size="30" /> Expo
@@ -123,6 +129,9 @@ const Skills = () => (
             <Flutter size="30" /> Flutter
         </Tec>
         <Tec>
+            <Php size="30" /> PHP
+        </Tec>
+        <Tec>
             <Word size="30" /> Wordpress
         </Tec>
         <Tec>
@@ -133,6 +142,9 @@ const Skills = () => (
         </Tec>
         <Tec>
             <Server size="30" /> express.js
+        </Tec>
+        <Tec>
+            <Postgresql size="30" /> PostgreSQL
         </Tec>
         <Tec>
             <Mysql size="30" /> MySQL
@@ -147,6 +159,9 @@ const Skills = () => (
             <Webpack size="30" /> Webpack
         </Tec>
         <Tec>
+            <StyledComps size="30" /> Styled-Components
+        </Tec>
+        <Tec>
             <Boots size="30" /> Bootstrap
         </Tec>
         <Tec>
@@ -156,10 +171,13 @@ const Skills = () => (
             <MatUi size="30" /> Material-Ui
         </Tec>
         <Tec>
+            <Tailwindcss size="30" /> Tailwind-css
+        </Tec>
+        <Tec>
             <MatCss size="30" /> Materialize-css
         </Tec>
         <Tec>
-            <Angular size="30" /> Angular 9
+            <Angular size="30" /> Angular
         </Tec>
     </ListSkills>
 );
