@@ -5,8 +5,6 @@ export type IChangeLanguage = (dispatch: any) => { type: any, payload: string }
 
 // Action Creator
 const changeLanguage: IChangeLanguage = (language) => {
-    console.log({ language });
-    
     return {
         type: CHANGE_LANGUAGE,
         payload: String(language)

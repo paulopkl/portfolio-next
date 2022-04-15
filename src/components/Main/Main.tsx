@@ -230,7 +230,6 @@ const MainComponent: NextPage<IMainComponentProps> = ({ language }) => {
 
     useEffect(() => {
         axios.get('https://api.github.com/users/paulopkl/repos').then((response) => {
-            console.log(response.data);
             setData(response.data);
         });
     }, []);

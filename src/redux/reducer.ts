@@ -14,8 +14,6 @@ export type IReducer = (state: IReducerState, action: IAction) => IReducerState
 const initialState: IReducerState = { language: 'Portuguese' }
 
 const reducer: IReducer = (state = initialState, action: IAction) => {
-    console.log({ action });
-    
     switch (action.type) {
         case CHANGE_LANGUAGE: return { language: action.payload as "Portuguese" | "English" }
         default: return state
