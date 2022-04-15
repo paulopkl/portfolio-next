@@ -1,11 +1,9 @@
 import React from 'react';
-
 import styled from 'styled-components';
-
 import { FaHeart } from 'react-icons/fa';
+import { NextPage } from 'next';
 
 const Footer = styled.footer`
-
     width: 100%;
     background: linear-gradient(to right, #0A210C, #0A210C);
     height: 15vh;
@@ -16,11 +14,9 @@ const Footer = styled.footer`
     justify-content: center;
     box-sizing: border-box;
     z-index: 2;
-
 `;
 
 const Title = styled.h2`
-
     color: #fff;
     font-weight: 300;
     font-size: 1.25rem;
@@ -29,12 +25,10 @@ const Title = styled.h2`
         text-align: center;
         font-size: 1rem;
         width: 75%;
-    }
-    
-    `;
+    }  
+`;
 
 const HeartIcon = styled(FaHeart)`
-
     color: red;
     margin-left: 0.7rem;
     
@@ -42,10 +36,10 @@ const HeartIcon = styled(FaHeart)`
         margin-left: 0.1rem;
         width: 20px;
     }
-
 `;
 
-function FooterComponent() {
+const FooterComponent: NextPage = () => {
+    
     return (
         <Footer>
             <Title>

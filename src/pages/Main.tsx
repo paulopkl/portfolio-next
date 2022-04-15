@@ -1,4 +1,5 @@
 import React from 'react';
+import { NextPage } from 'next';
 import Footer from '../components/Footer/Footer';
 import Main from '../components/Main/Main';
 import Navbar from '../components/Navbar/Navbar';
@@ -10,7 +11,7 @@ const Template = styled.div`
     background-attachment: fixed;
 `;
 
-const Home = () => {
+const Home: NextPage = () => {
     return (
         <Template>
             <Navbar />

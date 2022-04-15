@@ -1,14 +1,17 @@
 import React from 'react';
-
 import styled from 'styled-components';
-
 import Image from 'next/image';
-
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
 import { connect } from 'react-redux';
+import { IStateRedux } from '../../redux/store';
+import { ILanguage } from '../../redux/action';
+import { NextPage } from 'next';
+
+interface ICardFooterProps {
+    language: ILanguage,
+}
 
 const Footer = styled.div`
   display: flex;
@@ -174,62 +177,61 @@ const Super = styled.sup`
   }
 `;
 
-const CardFooter = props => {
+const CardFooter: NextPage<ICardFooterProps> = ({ language }) => {
+    const [open, setOpen] = React.useState(false);
 
-  const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const UdemyCertificates = [
-    {
-      subtitle: "Aprenda Flutter e Desenvolva Apps Para Android e IOS - ",
-      urlCertificate: "https://www.udemy.com/certificate/UC-7d750117-0d58-4768-ba38-98df2a84f892/"
-    },
-    {
-      subtitle: "MERN Stack React Node Ecommerce from Scratch to Deployment - ",
-      urlCertificate: "https://www.udemy.com/certificate/UC-89bb93a5-da74-467d-9425-1152377f30e4/"
-    },
-    {
-      subtitle: "GraphQL: Criando APIs Profissionais e Flexíveis - ",
-      urlCertificate: "https://www.udemy.com/certificate/UC-44bd62c3-f9b2-4ab6-a375-c2162e7c2d8a/"
-    },
-    {
-      subtitle: "Curso Web Moderno Completo com JavaScript 2020 + Projetos - ",
-      urlCertificate: "https://www.udemy.com/certificate/UC-cc15b25b-87ad-4b2b-b01b-2d1604d9e7ce/"
-    },
-    {
-      subtitle: "Curso Completo Do Desenvolvedor NodeJS e MongoDB - ",
-      urlCertificate: "https://www.udemy.com/certificate/UC-8897bd28-2a81-45d5-b8d6-8d3451ff1b6b/"
-    },
-    {
-      subtitle: "Curso React + Redux Fundamentos + 2 apps do ZERO - ",
-      urlCertificate: "https://www.udemy.com/certificate/UC-19504f6a-f80b-45d1-b962-5b896c2cbc2c/"
-    },
-    {
-      subtitle: "React Native: Desenvolva APPs Nativas para Android e iOS - ",
-      urlCertificate: "https://www.udemy.com/certificate/UC-5dbe56d3-9627-467b-ac3b-d84900496078/"
-    },
-    {
-      subtitle: "Docker: Ferramenta essencial para Desenvolvedores - ",
-      urlCertificate: "https://www.udemy.com/certificate/UC-74d222b5-cf8e-416c-ae58-1285f6a82ea3/"
-    },
-    {
-      subtitle: "Do Zero à Nuvem: API Restful com NodeJS, Restify e MongoDB - ",
-      urlCertificate: "https://www.udemy.com/certificate/UC-f625b81c-1cb1-4849-8775-a66f644883df/"
-    },
-  ]
+    const UdemyCertificates = [
+        {
+            subtitle: "Aprenda Flutter e Desenvolva Apps Para Android e IOS - ",
+            urlCertificate: "https://www.udemy.com/certificate/UC-7d750117-0d58-4768-ba38-98df2a84f892/"
+        },
+        {
+            subtitle: "MERN Stack React Node Ecommerce from Scratch to Deployment - ",
+            urlCertificate: "https://www.udemy.com/certificate/UC-89bb93a5-da74-467d-9425-1152377f30e4/"
+        },
+        {
+            subtitle: "GraphQL: Criando APIs Profissionais e Flexíveis - ",
+            urlCertificate: "https://www.udemy.com/certificate/UC-44bd62c3-f9b2-4ab6-a375-c2162e7c2d8a/"
+        },
+        {
+            subtitle: "Curso Web Moderno Completo com JavaScript 2020 + Projetos - ",
+            urlCertificate: "https://www.udemy.com/certificate/UC-cc15b25b-87ad-4b2b-b01b-2d1604d9e7ce/"
+        },
+        {
+            subtitle: "Curso Completo Do Desenvolvedor NodeJS e MongoDB - ",
+            urlCertificate: "https://www.udemy.com/certificate/UC-8897bd28-2a81-45d5-b8d6-8d3451ff1b6b/"
+        },
+        {
+            subtitle: "Curso React + Redux Fundamentos + 2 apps do ZERO - ",
+            urlCertificate: "https://www.udemy.com/certificate/UC-19504f6a-f80b-45d1-b962-5b896c2cbc2c/"
+        },
+        {
+            subtitle: "React Native: Desenvolva APPs Nativas para Android e iOS - ",
+            urlCertificate: "https://www.udemy.com/certificate/UC-5dbe56d3-9627-467b-ac3b-d84900496078/"
+        },
+        {
+            subtitle: "Docker: Ferramenta essencial para Desenvolvedores - ",
+            urlCertificate: "https://www.udemy.com/certificate/UC-74d222b5-cf8e-416c-ae58-1285f6a82ea3/"
+        },
+        {
+            subtitle: "Do Zero à Nuvem: API Restful com NodeJS, Restify e MongoDB - ",
+            urlCertificate: "https://www.udemy.com/certificate/UC-f625b81c-1cb1-4849-8775-a66f644883df/"
+        },
+    ]
 
     return (
         <Footer>
             <Email href="mailto:'palmeida.ipms@gmail.com?Subject='Contato de: PAULO RICARDO'">E-Mail</Email>
             <About onClick={handleOpen}>
-                {props.language === 'English' ? <>More About Me</> : <>Mais Sobre Mim</>}
+                {language === 'English' ? <>More About Me</> : <>Mais Sobre Mim</>}
             </About>
             <ModalStyle aria-labelledby="transition-modal-title" BackdropProps={{ timeout: 1500 }}
                 aria-describedby="transition-modal-description" open={open} onClose={handleClose} 
@@ -245,7 +247,7 @@ const CardFooter = props => {
                         />
                         <Datas>
                             <Title>
-                                {props.language === 'English' ? <>Experience</> : <>Experiência</>}
+                                {language === 'English' ? <>Experience</> : <>Experiência</>}
                             </Title>
                             <SubTitle>
                                 Auxiliar Admnistrativo/Monitor de Tacógrafo - 
@@ -258,14 +260,14 @@ const CardFooter = props => {
                                 <sup> 2019 - 2020</sup>
                             </SubTitle>
                             <Title>
-                                {props.language === 'English' ? <>Formation</> : <>Formação</>}
+                                {language === 'English' ? <>Formation</> : <>Formação</>}
                             </Title>
                             <SubTitle>
                                 Técnico de Informática (Software) - 
                                 <strong> EMDR Leandro Franceschini </strong>
                                 <sup> 2017 - 2020 </sup>
                             </SubTitle>
-                            <Title>{props.language === 'English' ? <>Other Courses</> : <>Outros Cursos</>}</Title>
+                            <Title>{language === 'English' ? <>Other Courses</> : <>Outros Cursos</>}</Title>
                             {UdemyCertificates.map((certificate, i) => (
                                 <SubTitle key={i}>
                                     {certificate.subtitle}
@@ -299,10 +301,6 @@ const CardFooter = props => {
     );
 }
 
-const mapStateToProps = state => {
-  return { language: state.language.language }
-}
+const mapStateToProps = (state: IStateRedux) => ({ language: state.language.language });
 
-const cardFooter = connect(mapStateToProps)(CardFooter);
-
-export default cardFooter;
+export default connect(mapStateToProps, {})(CardFooter);

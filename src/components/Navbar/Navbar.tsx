@@ -1,14 +1,17 @@
 import React from 'react';
-
 import Link from 'next/link';
 import Image from 'next/image';
-
 import styled from 'styled-components';
-
 import { connect } from 'react-redux';
+import { IStateRedux } from '../../redux/store';
+import { ILanguage } from '../../redux/action';
+import { NextPage } from 'next';
+
+interface INavbarComponentProps {
+    language: ILanguage,
+}
 
 const Navbar = styled.nav`
-
     width: 100%;
     background: linear-gradient(150deg, #0A210C, #08415C);
     height: 12vh;
@@ -23,11 +26,9 @@ const Navbar = styled.nav`
     @media(max-width: 590px) {
         padding: 0 1rem 0 0;
     }
-
 `;
 
 const Title = styled.h1`
-
     margin: 0;
     color: rgba(0, 0, 0, 0.1);
     text-shadow: 1px -1px 0px #D6FFD9, -1px 1px 4px #1FB836, -1px 4px 5px #1F85B8;
@@ -35,11 +36,9 @@ const Title = styled.h1`
     display: flex;
     align-items: center;
     height: 100%;
-
 `;
 
 const ComeBack = styled.a`
-    
     transition: 1s;
     text-decoration: none;
     font-size: 1.3rem;
@@ -69,7 +68,7 @@ const ImageWrapper = styled.div`
     }
 `;
 
-const NavbarComponent = props => {
+const NavbarComponent: NextPage<INavbarComponentProps> = ({ language }) => {
     return (
         <header>
             <Navbar className="navbar">
@@ -86,7 +85,7 @@ const NavbarComponent = props => {
                 </Title>
                 <Link href="/" passHref>
                     <ComeBack>
-                        {props.language === 'English' ? <>Back</> : <>Voltar</>}
+                        {language === 'English' ? <>Back</> : <>Voltar</>}
                     </ComeBack>
                 </Link>
             </Navbar>
@@ -94,10 +93,6 @@ const NavbarComponent = props => {
     );
 }
 
-const mapStateToProps = state => {
-    return { language: state.language.language }
-}
+const mapStateToProps = (state: IStateRedux) => ({ language: state.language.language });;
 
-const navbarComponent = connect(mapStateToProps)(NavbarComponent);
-
-export default navbarComponent;
+export default connect(mapStateToProps)(NavbarComponent);

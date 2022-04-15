@@ -1,17 +1,44 @@
 import React, { useState } from 'react';
-
 import styled from 'styled-components';
-
 import Image from 'next/image';
-
 import Lottie from 'react-lottie';
 import animationData from './animation.json';
-
 import { AiFillTool } from 'react-icons/ai';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
-
 import axios from 'axios';
+import { ILanguage } from '../../redux/action';
+import { IStateRedux } from '../../redux/store';
+import { NextPage } from 'next';
+
+interface IMainComponentProps {
+    language: ILanguage,
+}
+
+interface IGitHubReposData {
+    name: string,
+    description: string,
+    clone_url: string,
+}
+
+interface ITitle {
+    under?: boolean,
+    small?: boolean,
+}
+
+interface IProgImageWrapper {
+    isStyle?: boolean,
+}
+
+interface ITableData {
+    fontSize?: string,
+}
+
+interface IParagraph extends ITableData {
+    build?: boolean,
+}
+
+interface IProgImage extends IProgImageWrapper {}
 
 const Main = styled.main`
     box-sizing: content-box;
@@ -37,14 +64,14 @@ const Datas = styled.div`
     }
 `;
 
-const Title = styled.h1`
+const Title = styled.h1<ITitle>`
     font-size: 3rem;
     margin: 0;
     color: ${props => props.color ? props.color : ''};
-    text-decoration-line: ${props => props.under ? 'underline' : ''};
+    text-decoration-line: ${({ under }) => under ? 'underline' : ''};
 
     @media(max-width: 420px) {
-        font-size: ${props => props.small ? '1.75rem' : '2.5rem'};
+        font-size: ${({ small }) => small ? '1.75rem' : '2.5rem'};
         text-align: center;
     }
 `;
@@ -64,11 +91,11 @@ const Section = styled.section`
     }
 `;
 
-const ProgImage = styled(Image).attrs(props => ({ isStyle: props.isStyle || false }))`
-border-radius: 30px 0px;
+const ProgImage = styled(Image).attrs(({ isStyle }: IProgImage) => ({ isStyle: isStyle || false }))`
+    border-radius: 30px 0px;
 `;
 
-const ProgImageWrapper = styled.div`
+const ProgImageWrapper = styled.div<IProgImageWrapper>`
     display: flex;
     transition: 1s;
     width: 50vw;
@@ -82,46 +109,45 @@ const ProgImageWrapper = styled.div`
         height: 25vh;
     }
 
-    ${props => props.isStyle ? `
-    animation: animate 5s ease-in;
+    ${({ isStyle }) => isStyle ? `
+        animation: animate 5s ease-in;
 
-    @keyframes animate {
-        0% {
-            box-shadow: 1px 5px 40px  rgb(223, 238, 16);
-            transform: rotate(360deg);
-            filter: hue-rotate(10deg);
+        @keyframes animate {
+            0% {
+                box-shadow: 1px 5px 40px  rgb(223, 238, 16);
+                transform: rotate(360deg);
+                filter: hue-rotate(10deg);
+            }
+            20% {
+                width: 90vw;
+                height: 30vh;
+                box-shadow: 1px 5px 40px  rgb(219, 16, 238);
+                filter: hue-rotate(90deg);
+            }
+            30% {
+                box-shadow: 1px 5px 40px  rgb(16, 223, 238);
+                transform: rotate(-15deg);
+                filter: grayscale(50%);
+            }
+            33% { box-shadow: 1px 1px 40px  rgb(41, 201, 26); }
+            66% { box-shadow: 1px 1px 40px  rgb(26, 43, 201); }
+            99% { box-shadow: 4px 4px 10px  rgb(30, 50, 104); }
         }
-        20% {
-            width: 90vw;
-            height: 30vh;
-            box-shadow: 1px 5px 40px  rgb(219, 16, 238);
-            filter: hue-rotate(90deg);
-        }
-        30% {
-            box-shadow: 1px 5px 40px  rgb(16, 223, 238);
-            transform: rotate(-15deg);
-            filter: grayscale(50%);
-        }
-        33% { box-shadow: 1px 1px 40px  rgb(41, 201, 26); }
-        66% { box-shadow: 1px 1px 40px  rgb(26, 43, 201); }
-        99% { box-shadow: 4px 4px 10px  rgb(30, 50, 104); }
-    }
-
     ` : ''}
 `;
 
-const Paragraph = styled.p`
+const Paragraph = styled.p<IParagraph>`
     line-height: 1.6;
     text-align: center;
-    color: ${props => props.color ? props.color : ''};
-    font-size: ${props => props.fontSize ? props.fontSize : ''};
+    color: ${({ color }) => color ? color : ''};
+    font-size: ${({ fontSize }) => fontSize ? fontSize : ''};
     display: flex;
     justify-content: center;
     
     @media(max-width: 350px) {
-        display: ${props => props.build ? 'block' : 'flex'};
-        justify-content: ${props => props.build ? 'none' : 'center'};
-        align-items: ${props => props.build ? 'none' : 'center'};
+        display: ${({ build }) => build ? 'block' : 'flex'};
+        justify-content: ${({ build }) => build ? 'none' : 'center'};
+        align-items: ${({ build }) => build ? 'none' : 'center'};
     }
 `;
 
@@ -160,11 +186,10 @@ const Table = styled.table`
     }
 `;
 
-const TableData = styled.td`
+const TableData = styled.td<ITableData>`
     text-align: center;
     color: rgb(250, 250, 250);
-    font-size: ${props => props.fontSize ? props.fontSize : '1rem'};
-
+    font-size: ${({ fontSize }) => fontSize ? fontSize : '1rem'};
 
     a {
         text-decoration-line: none;
@@ -190,10 +215,10 @@ const LottieAnim = styled.div`
     width: 50vw;
 `;
 
-const MainComponent = props => {
+const MainComponent: NextPage<IMainComponentProps> = ({ language }) => {
 
-    const [isStyle, setIsStyle] = useState(false);
-    const [data, setData] = useState([]);
+    const [isStyle, setIsStyle] = useState<boolean>(false);
+    const [data, setData] = useState<IGitHubReposData[]>([]);
 
     const changeStyle = () => setIsStyle(true);
 
@@ -205,8 +230,9 @@ const MainComponent = props => {
 
     useEffect(() => {
         axios.get('https://api.github.com/users/paulopkl/repos').then((response) => {
+            console.log(response.data);
             setData(response.data);
-        })
+        });
     }, []);
 
     return (
@@ -214,47 +240,47 @@ const MainComponent = props => {
             <Article>
                 <Datas>
                     <Title small>
-                        {props.language === 'English' 
+                        {language === 'English' 
                             ? <>Welcome to my Portfólio</> 
                             : <>Bem-vindo ao meu portfólio</>}
                     </Title>
                     <Paragraph>
-                        {props.language === 'English'
+                        {language === 'English'
                             ? <>SPA made with ReactJS and stylized with Styled-Components.</>
                             : <>SPA feito com ReactJS e estilizado com Styled-Components.</>}
                     </Paragraph>
                     <hr/>
                     <Paragraph>
-                        {props.language === 'English' 
-                        ? <>This portfolio will connect to a GitHub REST API, where you will be asked for the
-                        information from the repositories and link to the projects respectively. The majority of
-                        projects that will be listed here were made without a framework or with ReactJs</> 
-                        : <>Este portfólio irá se conectar a uma REST API do GitHub, onde será requisitado as 
-                        informações dos repositórios e link dos projetos respectivamente. A maioria dos 
-                        projetos que serão listados aqui foram feitos sem framework ou com ReactJs</>}
+                        {language === 'English' 
+                            ? <>This portfolio will connect to a GitHub REST API, where you will be asked for the
+                            information from the repositories and link to the projects respectively. The majority of
+                            projects that will be listed here were made without a framework or with ReactJs</> 
+                            : <>Este portfólio irá se conectar a uma REST API do GitHub, onde será requisitado as 
+                            informações dos repositórios e link dos projetos respectivamente. A maioria dos 
+                            projetos que serão listados aqui foram feitos sem framework ou com ReactJs</>}
                     </Paragraph>
                     <Paragraph>
-                        {props.language === 'English' 
-                        ? <>Recently I have been studying and practicing on projects with ReactJS + Redux to create
-                        interfaces or features, and Node.js for the back end.</> 
-                        : <>Recentemente venho estudando e praticando em projetos com ReactJS + Redux para criar 
-                        interfaces ou features, e Node.js para o back-end.</>}
+                        {language === 'English' 
+                            ? <>Recently I have been studying and practicing on projects with ReactJS + Redux to create
+                            interfaces or features, and Node.js for the back end.</> 
+                            : <>Recentemente venho estudando e praticando em projetos com ReactJS + Redux para criar 
+                            interfaces ou features, e Node.js para o back-end.</>}
                     </Paragraph>
                     <Paragraph>           
-                        {props.language === 'English' 
-                        ? <>In server-side development, I really enjoy using node.js and its frameworks like 
-                        express.js, nodemon and sequilize (ORM - integrates the database).</> 
-                        : <>No desenvolvimento do lado do servidor, gosto muito de utilizar o node.js e seus 
-                        frameworks como express.js, nodemon e sequilize (ORM - integra o banco de dados).</>}  
+                        {language === 'English' 
+                            ? <>In server-side development, I really enjoy using node.js and its frameworks like 
+                            express.js, nodemon and sequilize (ORM - integrates the database).</> 
+                            : <>No desenvolvimento do lado do servidor, gosto muito de utilizar o node.js e seus 
+                            frameworks como express.js, nodemon e sequilize (ORM - integra o banco de dados).</>}  
                     </Paragraph>
                     <Paragraph>
-                        {props.language === 'English' 
-                        ? <>My favorite bank is without a doubt MongoDB, but I have no restrictions on using
-                        MySQL just finds it easier in a web application to store data in JSON even though
-                        sometimes the NoSQL bank is at a disadvantage.</> 
-                        : <>Meu banco preferido é sem duvidas o MongoDB, mas não tenho restrições para usar o 
-                        MySQL apenas acho mais fácil em uma aplicação web armazenar dados em JSON mesmo que
-                        em algumas ocasiões o banco NoSQL estejam em desvantagem.</>}
+                        {language === 'English' 
+                            ? <>My favorite bank is without a doubt MongoDB, but I have no restrictions on using
+                            MySQL just finds it easier in a web application to store data in JSON even though
+                            sometimes the NoSQL bank is at a disadvantage.</> 
+                            : <>Meu banco preferido é sem duvidas o MongoDB, mas não tenho restrições para usar o 
+                            MySQL apenas acho mais fácil em uma aplicação web armazenar dados em JSON mesmo que
+                            em algumas ocasiões o banco NoSQL estejam em desvantagem.</>}
                     </Paragraph>
                 </Datas>
                 <ProgImageWrapper
@@ -274,11 +300,11 @@ const MainComponent = props => {
             <Section>
                 <a href="https://github.com/paulopkl" target="_blank" rel="noopener noreferrer">
                     <Title color="white" under>
-                    {props.language === 'English' ? <>GitHub Projects</> : <>Projetos Github</>}
+                    {language === 'English' ? <>GitHub Projects</> : <>Projetos Github</>}
                     </Title>
                 </a>
                 <Paragraph color="white" fontSize={'1.25rem'} build>
-                    {props.language === 'English' ? <>Under Construction</> : <>Em construção (Building)</> }
+                    {language === 'English' ? <>Under Construction</> : <>Em construção (Building)</> }
                     <AiFillTool size={40} />
                 </Paragraph>
                 <Field>
@@ -323,8 +349,6 @@ const MainComponent = props => {
     );
 }
 
-const mapStateToProps = state => ({ language: state.language.language });
+const mapStateToProps = (state: IStateRedux) => ({ language: state.language.language });
 
-const mainComponent = connect(mapStateToProps)(MainComponent);
-
-export default mainComponent;
+export default connect(mapStateToProps, {})(MainComponent);

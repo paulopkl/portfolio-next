@@ -10,6 +10,7 @@ import { AiTwotoneApi } from 'react-icons/ai';
 import { DiSass, DiMaterializecss, DiDotnet } from 'react-icons/di';
 import { GrGraphQl } from 'react-icons/gr';
 import { RiFlutterFill } from 'react-icons/ri';
+import { NextPage } from 'next';
 
 const ListSkills = styled.ul`
     margin: 2rem 0;
@@ -75,7 +76,7 @@ const Kubernetes = styled(SiKubernetes)` margin-bottom: 10px; `;
 const AWS = styled(FaAws)` margin-bottom: 10px; `;
 const Tailwindcss = styled(SiTailwindcss)` margin-bottom: 10px; `;
 
-const Skills = () => (
+const Skills: NextPage = () => (
     <ListSkills>
         <Tec>
             <Html size="30" /> HTML

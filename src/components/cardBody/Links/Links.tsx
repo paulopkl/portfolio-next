@@ -1,16 +1,22 @@
-import React from 'react';
-import styled from 'styled-components';
+import { NextPage } from 'next';
 import Link from 'next/link';
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
 import { FaPaperclip } from 'react-icons/fa';
 import { SiWhatsapp } from 'react-icons/si';
 import { FiInstagram } from 'react-icons/fi';
 import { GrLinkedinOption } from 'react-icons/gr';
 import { GoMarkGithub } from 'react-icons/go';
 import { HiDocumentReport } from 'react-icons/hi';
-import { connect } from 'react-redux';
+import { ILanguage } from '../../../redux/action';
+import { IStateRedux } from '../../../redux/store';
+
+interface ILinksProps {
+    language: ILanguage,
+}
 
 const ListLinks = styled.ul`
-
     display: flex;
     margin: 1rem;
     flex-wrap: wrap;
@@ -21,11 +27,9 @@ const ListLinks = styled.ul`
         margin: 0;
         justify-content: space-around;
     }
-
 `;
 
 const ListOption = styled.li`
-
     list-style: none;
     margin: 0rem 1rem;
     display: flex;
@@ -43,11 +47,9 @@ const ListOption = styled.li`
     @media(max-width: 510px) {
         width: 20%;
     }
-
 `;
 
 const ClipsIcon = styled(FaPaperclip)`
-
     transition: 0.5s;
     background: linear-gradient(45deg, rgb(37, 75, 199), rgb(2, 68, 167));
     box-shadow: 1px 4px 20px  rgb(37, 75, 199);
@@ -63,11 +65,9 @@ const ClipsIcon = styled(FaPaperclip)`
         height: 40px;
         cursor: pointer;
     }
-
 `;
 
 const WhatssapIcon = styled(SiWhatsapp)`
-
     transition: 0.5s;
     background: linear-gradient(45deg, rgb(73, 170, 64), rgb(7, 129, 103));
     box-shadow: 1px 4px 20px rgb(99, 230, 87);
@@ -83,11 +83,9 @@ const WhatssapIcon = styled(SiWhatsapp)`
         height: 40px;
         cursor: pointer;
     }
-
 `;
 
 const InstaIcon = styled(FiInstagram)`
-
     transition: 0.5s;
     background: linear-gradient(45deg, rgb(63, 80, 180), rgb(228, 41, 228), rgb(228, 41, 41));
     box-shadow: 1px 4px 20px rgb(139, 67, 180);
@@ -103,11 +101,9 @@ const InstaIcon = styled(FiInstagram)`
         height: 40px;
         cursor: pointer;
     }
-
 `;
 
 const InIcon = styled(GrLinkedinOption)`
-
     transition: 0.5s;
     background: linear-gradient(45deg, rgb(67, 101, 211), rgb(26, 57, 196));
     box-shadow: 1px 4px 20px rgb(67, 101, 211);
@@ -123,11 +119,9 @@ const InIcon = styled(GrLinkedinOption)`
         height: 40px;
         cursor: pointer;
     }
-
 `;
 
 const GitIcon = styled(GoMarkGithub)`
-
     transition: 0.5s;
     background: linear-gradient(45deg, rgb(77, 77, 77), rgb(136, 136, 136));
     box-shadow: 1px 4px 20px rgb(136, 136, 136);
@@ -143,11 +137,9 @@ const GitIcon = styled(GoMarkGithub)`
         height: 40px;
         cursor: pointer;
     }
-
 `;
 
 const CurrIcon = styled(HiDocumentReport)`
-
     transition: 0.5s;
     background: linear-gradient(45deg, rgb(85, 85, 87), rgb(14, 39, 77));
     box-shadow: 1px 4px 20px rgb(85, 85, 87);
@@ -163,21 +155,22 @@ const CurrIcon = styled(HiDocumentReport)`
         height: 40px;
         cursor: pointer;
     }
-
 `;
 
+const Links: NextPage<ILinksProps> = ({ language }) => {
 
-const Links = ({ language }) => {
-
-    const moveScroll = () => {
-        document.documentElement.scrollTop = 0;
-    }
+    // const moveScroll = () => {
+    //     document.documentElement.scrollTop = 0;
+    // }
 
     return (
         <ListLinks>
             <ListOption>
-                <Link href="/Main" onClick={moveScroll}>
-                    <ClipsIcon size="30" />
+                <Link href="/Main" passHref>
+                    <ClipsIcon
+                        size="30" 
+                        // onClick={moveScroll} 
+                    />
                 </Link>
                 Portifólio
             </ListOption>
@@ -223,10 +216,6 @@ const Links = ({ language }) => {
     );
 }
 
-const mapStateToProps = state => {
-    return { 
-        language: state.language.language
-    }
-}
+const mapStateToProps = (state: IStateRedux) => ({ language: state.language.language });
 
 export default connect(mapStateToProps, {})(Links);

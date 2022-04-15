@@ -1,8 +1,7 @@
 import App from 'next/app';
 import React from 'react';
 import { createWrapper } from "next-redux-wrapper";
-import store from '../redux/store.js';
-
+import store from '../redux/store';
 import { Provider } from "react-redux";
 
 class MyApp extends App {
