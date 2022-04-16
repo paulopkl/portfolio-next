@@ -88,7 +88,7 @@ const CardHeader: NextPage<ICardHeader> = ({ language }) => {
         </Sub>
         <Flex>
             <LocationIcon size="35" />
-            <Location>Sumaré, São Paulo</Location>
+            <Location>Campinas, São Paulo</Location>
         </Flex>
         <hr />
         <Schooling />
