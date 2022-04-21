@@ -7,20 +7,19 @@ import Image from "next/image";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { changeLanguage, IChangeLanguage, ILanguage } from "../redux/action"; // Redux Action
-import { connect, useDispatch } from "react-redux"; // Redux Package
+import { changeLanguage, IChangeAction, ILanguage } from "../redux/action"; // Redux Action
+import { connect } from "react-redux"; // Redux Package
 // import { bindActionCreators } from "redux"; 
 import styled from "styled-components"; // Styled
 import { IStateRedux } from "../redux/store";
 import Speaker from "../components/Speaker";
-import { FcLeft } from "react-icons/fc";
 import { FaHandPointLeft } from "react-icons/fa";
 
 // Interfaces
 interface IMainComponentProps {
     isSelected?: boolean,
     language: ILanguage,
-    changeLanguage: IChangeLanguage,
+    changeLanguage: IChangeAction,
 }
 
 interface ImageWrapperProps {
@@ -227,7 +226,17 @@ const ImgIcon = styled(Image)<ImgIconProps>`
 const MainComponent: NextPage<IMainComponentProps> = ({ language, changeLanguage }) => {
     const [open, setOpen] = useState(false);
 
-    const dispatch = useDispatch();
+    useEffect(() => {
+        const lang = window.localStorage.getItem('language');
+
+        console.log(lang);
+
+        if (lang === "English" || lang === "Portuguese") {
+            changeLanguage(lang);
+        } else {
+            setOpen(true);
+        }
+    }, []);
 
     const handleOpen = () => {
         setOpen(true);
@@ -238,26 +247,20 @@ const MainComponent: NextPage<IMainComponentProps> = ({ language, changeLanguage
     };
 
     const changeLang = (lang: string) => {
-        dispatch(changeLanguage(lang));
+        window.localStorage.setItem('language', lang);
+        changeLanguage(lang);
         setOpen(false);
     };
-
-    useEffect(() => {
-        setOpen(true);
-    }, []);
 
     return (
         <Main>
             <LanguageChangeContainer>
                 <ButtonLanguage type="button" onClick={handleOpen}>
-                    {/* <ImageWrapper> */}
                     <ImgIcon
                         src={language === "Portuguese" ? "/assets/brazil.png" : "/assets/united-states.png"}
                         width={90}
                         height={80}
-                        // layout='fill'
                     />
-                    {/* </ImageWrapper> */}
                 </ButtonLanguage>
                 <LanguageChangeText>
                     <HandPointLeft />
@@ -327,6 +330,6 @@ const MainComponent: NextPage<IMainComponentProps> = ({ language, changeLanguage
 
 const mapStateToProps = (state: IStateRedux) => ({ language: state.language.language });
 // const mapDispatchToProps = () => bindActionCreators({ changeLanguage }, dispatch);
-const mapDispatchToProps = () => ({ changeLanguage });
+const mapDispatchToProps = ({ changeLanguage });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainComponent);

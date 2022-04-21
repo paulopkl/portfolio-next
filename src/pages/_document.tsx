@@ -21,7 +21,7 @@ export default class MyDocument extends Document<IMyDocumentProps> {
 
         // Step 2: Retrieve styles from components in the page
         // eslint-disable-next-line react/display-name
-        const page = renderPage((App: any) => (props: any) => sheet.collectStyles(<App {...props} />));
+        const page = renderPage((App: any) => (props: any) => { return sheet.collectStyles(<App {...props} />) });
 
         // Step 3: Extract the styles as <style> tags
         const styleTags = sheet.getStyleElement();
