@@ -3,12 +3,12 @@ import { NextPage } from 'next';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { changeLogin, IChangeAction, ILanguage, ILoadComments, loadComments } from '../../redux/action';
+import { changeLogin, IChangeLogin, ILanguage, ILoadComments, loadComments } from '../../redux/action';
 import { IStateRedux } from '../../redux/store';
 
 interface ICommentProps {
     language: ILanguage;
-    changeLogin: IChangeAction;
+    changeLogin: IChangeLogin;
     loadComments: ILoadComments;
 }
 

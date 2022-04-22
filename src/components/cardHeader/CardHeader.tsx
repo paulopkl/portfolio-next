@@ -40,7 +40,7 @@ const Sub = styled.p`
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 100;
     color: rgb(70, 70, 70);
     margin: 0;
@@ -52,10 +52,13 @@ const Sub = styled.p`
     }
 `;
 
-const Location = styled.p` font-size: 1.3rem; `;
+const Location = styled.p`
+    font-size: 1.2rem;
+    margin: 0;
+`;
 
 const LocationIcon = styled(GrLocation)`
-    margin-right: 1.2vh;
+    margin: 0 0.5vw;
     color: rgb(76, 76, 76);
 `;
 
@@ -69,25 +72,29 @@ const Image = styled.img`
 `;
 
 const Flex = styled.div`
+    margin-top: 5px;
     display: flex;
     align-items: center;
 `;
 
-const BrIcon = styled(GiBrazil)` color: green; `;
+const BrIcon = styled(GiBrazil)`
+    color: green;
+    font-size: 2rem;
+`;
 
 const CardHeader: NextPage<ICardHeader> = ({ language }) => {
   return (
     <Header>
         <Image src={"/assets/Autor.jpg"} alt="Author" />
         <Name>Paulo Ricardo A. de Almeida</Name>
-        <Sub>
-            {language === 'English' 
-                ? <span>Web Developer from<strong>Brazil</strong></span>
-                : <span>Desenvolvedor Web do<strong>Brasil</strong></span>}
-            <BrIcon />
-        </Sub>
         <Flex>
-            <LocationIcon size="35" />
+            {language === 'English' 
+                ? <Sub>Web Developer from<strong>Brazil</strong></Sub>
+                : <Sub>Desenvolvedor Web do<strong>Brasil</strong></Sub>}
+            <BrIcon />
+        </Flex>
+        <Flex>
+            <LocationIcon size="30" />
             <Location>Campinas, São Paulo</Location>
         </Flex>
         <hr />

@@ -61,8 +61,8 @@ const ClipsIcon = styled(FaPaperclip)`
     &:hover {
         transition: 0.7s;
         margin-top: -5px;
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         cursor: pointer;
     }
 `;
@@ -79,8 +79,8 @@ const WhatssapIcon = styled(SiWhatsapp)`
     &:hover {
         transition: 0.7s;
         margin-top: -5px;
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         cursor: pointer;
     }
 `;
@@ -97,8 +97,8 @@ const InstaIcon = styled(FiInstagram)`
     &:hover {
         transition: 0.7s;
         margin-top: -5px;
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         cursor: pointer;
     }
 `;
@@ -115,8 +115,8 @@ const InIcon = styled(GrLinkedinOption)`
     &:hover {
         transition: 0.7s;
         margin-top: -5px;
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         cursor: pointer;
     }
 `;
@@ -133,8 +133,8 @@ const GitIcon = styled(GoMarkGithub)`
     &:hover {
         transition: 0.7s;
         margin-top: -5px;
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         cursor: pointer;
     }
 `;
@@ -151,8 +151,8 @@ const CurrIcon = styled(HiDocumentReport)`
     &:hover {
         transition: 0.7s;
         margin-top: -5px;
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         cursor: pointer;
     }
 `;
@@ -167,48 +167,59 @@ const Links: NextPage<ILinksProps> = ({ language }) => {
         <ListLinks>
             <ListOption>
                 <Link href="/Main" passHref>
-                    <ClipsIcon
-                        size="30" 
-                        // onClick={moveScroll} 
-                    />
+                    <ClipsIcon size="50" />
                 </Link>
                 Portifólio
             </ListOption>
             <ListOption>
-                <a href="https://api.whatsapp.com/send?1=pt_BR&phone=5519983781727" target="_blank"
-                    rel="noopener noreferrer">
-                        <WhatssapIcon size="30" />
+                <a 
+                    href="https://api.whatsapp.com/send?1=pt_BR&phone=5519983781727" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <WhatssapIcon size="50" />
                 </a>
                 Whatsapp
             </ListOption>
             <ListOption>
-                <a href="https://www.instagram.com/paulo.ricardo.167189/" target="_blank"
-                    rel="noopener noreferrer">
-                        <InstaIcon size="30" />
+                <a 
+                    href="https://www.instagram.com/paulo.ricardo.167189/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                        <InstaIcon size="50" />
                 </a>
                 Instagram
             </ListOption>
             <ListOption>
-                <a href="https://www.linkedin.com/in/pauloricardoalvesdealmeida" target="_blank"
-                    rel="noopener noreferrer">
-                        <InIcon size="30" />
+                <a 
+                    href="https://www.linkedin.com/in/pauloricardoalvesdealmeida" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <InIcon size="50" />
                 </a>
                 Linkedin
             </ListOption>
             <ListOption>
-                <a href="https://github.com/paulopkl" target="_blank" rel="noopener noreferrer">
-                    <GitIcon size="30" />
+                <a 
+                    href="https://github.com/paulopkl" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                >
+                    <GitIcon size="50" />
                 </a>
                 Github
             </ListOption>
             <ListOption>
-                <a href={
-                    language === "English" 
+                <a 
+                    href={language === "English"
                         ? "https://drive.google.com/file/d/10fqd9E9bn2xlZk1BP6i9H6KdqucKiiEn/view?usp=sharing"
-                        : "https://drive.google.com/file/d/1Aj2PQNFAWB1w4-gGA3Oii0tXBnUPOJy1/view?usp=sharing"
-                }
-                    target="_blank" rel="noopener noreferrer">
-                        <CurrIcon size="30"  />
+                        : "https://drive.google.com/file/d/1Aj2PQNFAWB1w4-gGA3Oii0tXBnUPOJy1/view?usp=sharing"}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                >
+                    <CurrIcon size="50"  />
                 </a>
                 Curriculum
             </ListOption>

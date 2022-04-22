@@ -18,7 +18,7 @@ const Name = styled.h1`
     font-size: 1.3rem;
     font-weight: 100;
     color: rgb(70, 70, 70);
-    margin: 0 0 3vh 0;
+    margin: 0 0 0 0;
 `;
 
 const Title = styled.h1`
@@ -43,15 +43,16 @@ const Schooling: NextPage<ISchoolingProps> = ({ language }) => {
     return (
         <div>
             <Title>
-                <SchoolSharp size="35" />
-                {language === 'Portuguese' ? 'Escolaridade' : 'Schooling'}
+                <SchoolSharp size="40" />
+                {language === 'English' 
+                    ? 'Schooling' 
+                    : 'Escolaridade'}
             </Title>
             <Name>
                 <SchoolText>
                     {language === 'Portuguese' 
-                        ? `Cursando Ciência da Computação na UNIP`
-                        : `Studying Computer Science at UNIP`
-                    }
+                        ? "Studying Computer Science at UNIP"
+                        : "Cursando Ciência da Computação na UNIP"}
                 </SchoolText>
             </Name>
         </div>

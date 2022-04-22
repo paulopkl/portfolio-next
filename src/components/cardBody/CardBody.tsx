@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { NextPage } from 'next';
-import React, { useEffect, useState } from 'react';
-import { FaComment, FaRegCommentDots } from 'react-icons/fa';
+import React, { useEffect } from 'react';
+import { FaBrain, FaComment } from 'react-icons/fa';
+import { GiOpenBook } from 'react-icons/gi';
+import { RiContactsFill } from 'react-icons/ri';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { changeLogin, IChangeAction, ILanguage, ILoadComments, loadComments } from '../../redux/action';
+import { changeLogin, IChangeLogin, ILanguage, ILoadComments, loadComments } from '../../redux/action';
 import { IRatings } from '../../redux/reducer';
 import { IStateRedux } from '../../redux/store';
 import CommentComponent from './Comment';
@@ -16,7 +18,7 @@ import Skills from './Skills/Skills';
 interface ICardBodyProps {
     language: ILanguage;
     isLogged?: boolean;
-    changeLogin: IChangeAction;
+    changeLogin: IChangeLogin;
     comments: IRatings[];
     loadComments: ILoadComments
 }
@@ -52,9 +54,21 @@ const Comment = styled(FaComment)`
     margin-right: 10px;
 `;
 
+const OpenBook = styled(GiOpenBook)`
+    margin-right: 15px;
+`;
+
+const Title = styled.h1`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const ContactsFill = styled(RiContactsFill)`
+    margin-right: 15px;
+`;
+
 const CardBody: NextPage<ICardBodyProps> = ({ language, isLogged, comments, changeLogin, loadComments }) => {
-    // const [ratings, setRatings] = useState<IRatings[]>([]);
-    // const [comment, setComment] = useState(false);
 
     useEffect(() => {
         loadData();
@@ -65,6 +79,9 @@ const CardBody: NextPage<ICardBodyProps> = ({ language, isLogged, comments, chan
             .then(res => {
                 loadComments(res.data);
             })
+            .catch(err => {
+
+            });
 
         const token = (localStorage.getItem("token") || "");
 
@@ -74,10 +91,16 @@ const CardBody: NextPage<ICardBodyProps> = ({ language, isLogged, comments, chan
 
     return (
         <Body>
-            <h1>Skills</h1>
+            <Title>
+                <OpenBook size={35} />
+                Skills
+            </Title>
             <Skills />
             <hr style={{ width: "80%", border: "1px solid #b2b2b2" }} />
-            <h1>{language === "Portuguese" ? "Contato e redes sociais" : "Contact and social media"}</h1>
+            <Title>
+                <ContactsFill size={35} />
+                {language === "Portuguese" ? "Contato e redes sociais" : "Contact and social media"}
+            </Title>
             <Links />
             {isLogged 
                 ? <CommentComponent /> 
@@ -85,7 +108,7 @@ const CardBody: NextPage<ICardBodyProps> = ({ language, isLogged, comments, chan
             <CommentsArea>
                 <hr style={{ width: "100%", border: "1px solid #b2b2b2" }} />
                 <CommentCount>
-                    <Comment /> {language === "English" ? "Comments" : "Comentários"} ({comments.length})
+                    <Comment /> {language === "English" ? "Comments" : "Comentários"} ({ comments.length })
                 </CommentCount>
                 {comments.map(rating => (
                     <FeedBacks

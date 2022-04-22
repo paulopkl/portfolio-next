@@ -40,6 +40,7 @@ const FeebackAuthor = styled.h3`
     font-family: "Roboto";
     color: rgb(30, 50, 104);
     text-decoration: underline;
+    font-size: 1.25rem;
 `;
 
 const FeebackDescription = styled.p`

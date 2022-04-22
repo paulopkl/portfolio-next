@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import axios from 'axios';
-import { changeLogin, IChangeAction, ILanguage } from '../../redux/action';
+import axios, { AxiosError } from 'axios';
+import { changeLogin, IChangeLogin, ILanguage, IShowErrorMessage, showErrorMessage } from '../../redux/action';
 import { IStateRedux } from '../../redux/store';
 
 interface ISignupOrLoginProps {
-    language: ILanguage,
-    changeLogin: IChangeAction
+    language: ILanguage;
+    changeLogin: IChangeLogin;
+    showErrorMessage: IShowErrorMessage;
 }
 
 interface IDataState {
@@ -17,6 +18,10 @@ interface IDataState {
     email: string;
     password: string;
     language: string;
+}
+
+interface IButton {
+    loading?: boolean;
 }
 
 export const ButtonAnimated = styled.button`
@@ -50,19 +55,24 @@ export const ButtonAnimated = styled.button`
     }
 `;
 
-const Button = styled.button`
+const Button = styled.button<IButton>`
+    
+
     transition: 1s;
     padding: 18px;
-    margin: 10px auto 10px auto;
+    margin: ${({ loading }) => loading ? "10px auto 0px auto" : "10px auto 10px auto"};
     border-radius: 10px;
-    box-shadow: 4px 4px 10px grey;
-    background: linear-gradient(120deg, #0080ff, #0000ff);
+    min-width: 90px;
+    background: 
+        ${({ loading }) => loading 
+            ? "linear-gradient(120deg, #126eca, #00005a)" 
+            : "linear-gradient(120deg, #0080ff, #0000ff)"};
     color: #fff;
     font-weight: 900;
     font-size: 1.25rem;
-    box-shadow: -1px 4px 0px #232323;
+    box-shadow: ${({ loading }) => loading ? "none" : "-1px 4px 0px #232323"};
     border: none;
-    cursor: pointer;
+    cursor: ${({ loading }) => loading ? "wait" : "pointer"};
 `;
 
 const CardModal = styled(Modal)`
@@ -159,18 +169,28 @@ const initialData: IDataState = {
     language: "Portuguese",
 }
 
-const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin }) => {
-    const [open, setOpen] = useState(false);
-    const [signup, setSignup] = useState(false);
-    const [login, setLogin] = useState(false);
+const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin, showErrorMessage }) => {
+    const [open, setOpen] = useState<boolean>(false);
+    const [signup, setSignup] = useState<boolean>(false);
+    const [login, setLogin] = useState<boolean>(false);
     const [data, setData] = useState<IDataState>(initialData);
+    const [loadingEnter, setLoadingEnter] = useState<boolean>(false);
+    const [loadingSignup, setLoadingSignup] = useState<boolean>(false);
 
     const handleOnSignup = async () => {
         if (data.name.length > 3 && data.email.length > 3 && data.password.length > 3) {
-            const { data: { token } } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/signup` , data);
-                        
-            if (token) {
-                window.localStorage.setItem("token", token);
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/signup` , data)
+                .catch((res: AxiosError) => {
+                    if(res.response?.data.message) {
+                        showErrorMessage(res.response?.data.message);
+                        setLoadingSignup(true);
+                        setTimeout(() => setLoadingSignup(false), 3000);
+                    }
+                });
+
+
+            if (response?.data?.token) {
+                window.localStorage.setItem("token", response?.data?.token);
 
                 handleClose();
 
@@ -181,13 +201,20 @@ const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin })
     
     const handleOnLogin = async () => {
         if (data.email.length > 3 && data.password.length > 3) {
-            const { data: { token } } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+            const response: any = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
                 email: data.email,
                 password: data.password,
-            });
+            })
+                .catch((res: AxiosError) => {
+                    if(res.response?.data.message) {
+                        showErrorMessage(res.response?.data.message);
+                        setLoadingEnter(true);
+                        setTimeout(() => setLoadingEnter(false), 3000);
+                    }
+                });
                         
-            if (token) {
-                window.localStorage.setItem("token", token);
+            if (response?.data?.token) {
+                window.localStorage.setItem("token", response?.data?.token);
 
                 handleClose();
 
@@ -253,9 +280,13 @@ const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin })
                         </select>
                     </InputSection>
                 </InputSignupContent>
-                <ButtonAnimated onClick={handleOnSignup}>
-                    {language === "English" ? "Create Account" : "Criar Conta" }
-                </ButtonAnimated>
+                <Button onClick={handleOnSignup} loading={loadingSignup} disabled={loadingSignup}>
+                    {loadingEnter 
+                        ? <div className="spinner-border spinner-border-sm" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                        </div>
+                        : language === "English" ? "Create Account" : "Criar Conta"}
+                </Button>
             </SignupOrLoginWrapper>
         );
     }
@@ -289,9 +320,13 @@ const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin })
                     </InputSection>
                 </InputSignupContent>
                 <FlexAligned>
-                    <ButtonAnimated onClick={handleOnLogin}>
-                        {language === "English" ? "Enter" : "Entrar" }
-                    </ButtonAnimated>
+                    <Button onClick={handleOnLogin} loading={loadingEnter} disabled={loadingEnter}>
+                        {loadingEnter 
+                            ? <div className="spinner-border spinner-border-sm" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                          : language === "English" ? "Enter" : "Entrar" }
+                    </Button>
                 </FlexAligned>
             </SignupOrLoginWrapper>
         );
@@ -352,6 +387,6 @@ const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin })
 }
 
 const mapStateToProps = (state: IStateRedux) => ({ language: state.language.language });
-const mapDispatchToProps = ({ changeLogin });
+const mapDispatchToProps = ({ changeLogin, showErrorMessage });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupOrLogin);

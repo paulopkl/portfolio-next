@@ -36,14 +36,14 @@ export default class MyDocument extends Document<IMyDocumentProps> {
                 <Head>
                     {/* Step 5: Output the styles in the head  */}
                     {this.props.styleTags}
+                    {/* <meta 
+                        name="viewport" 
+                        content="width=device-width, initial-scale=1" 
+                    /> */}
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;1,100&display=swap"
                     />
-                    {/* <link
-                        rel="stylesheet"
-                        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap"
-                    /> */}
                     <link
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" 

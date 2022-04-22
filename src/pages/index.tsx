@@ -7,19 +7,20 @@ import Image from "next/image";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { changeLanguage, IChangeAction, ILanguage } from "../redux/action"; // Redux Action
+import { changeLanguage, IChangeLanguage, ILanguage } from "../redux/action"; // Redux Action
 import { connect } from "react-redux"; // Redux Package
 // import { bindActionCreators } from "redux"; 
 import styled from "styled-components"; // Styled
 import { IStateRedux } from "../redux/store";
 import Speaker from "../components/Speaker";
 import { FaHandPointLeft } from "react-icons/fa";
+import HandleMessage from "../components/HandleMessage";
 
 // Interfaces
 interface IMainComponentProps {
     isSelected?: boolean,
     language: ILanguage,
-    changeLanguage: IChangeAction,
+    changeLanguage: IChangeLanguage,
 }
 
 interface ImageWrapperProps {
@@ -318,6 +319,7 @@ const MainComponent: NextPage<IMainComponentProps> = ({ language, changeLanguage
                     </Content>
                 </Fade>
             </CardModal>
+            <HandleMessage />
             <Card>
                 <CardHeader />
                 <CardBody />
