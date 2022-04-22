@@ -1,15 +1,17 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { NextPage } from 'next';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { changeLogin, IChangeLogin, ILanguage, ILoadComments, loadComments } from '../../redux/action';
+import { changeLogin, IChangeLogin, ILanguage, ILoadComments, IShowMessage, loadComments, showErrorMessage, showSuccessMessage } from '../../redux/action';
 import { IStateRedux } from '../../redux/store';
 
 interface ICommentProps {
     language: ILanguage;
     changeLogin: IChangeLogin;
     loadComments: ILoadComments;
+    showSuccessMessage: IShowMessage;
+    showErrorMessage: IShowMessage;
 }
 
 const CommentWrapper = styled.div`
@@ -61,7 +63,7 @@ const ExitButton = styled.p`
     }
 `;
 
-const Comment: NextPage<ICommentProps> = ({ language, changeLogin, loadComments }) => {
+const Comment: NextPage<ICommentProps> = ({ language, changeLogin, loadComments, showSuccessMessage, showErrorMessage }) => {
     const [description, setDescription] = useState("");
 
     const postComment = async () => {
@@ -82,11 +84,24 @@ const Comment: NextPage<ICommentProps> = ({ language, changeLogin, loadComments 
                             authorization
                         }
                     }
-                );
+                )
+                    .then(res => {
+                        showSuccessMessage("Comment posted successfully!");
+                    })
+                    .catch((res: AxiosError) => {
+                        if(res.response?.data.message) {
+                            showErrorMessage(res.response?.data.message);
+                        }
+                    });
 
                 await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/ratings`)
                     .then(res => {
                         if(res.data) loadComments(res.data);
+                    })
+                    .catch((res: AxiosError) => {
+                        if(res.response?.data.message) {
+                            showErrorMessage(res.response?.data.message);
+                        }
                     });
 
                 setDescription("");
@@ -122,6 +137,6 @@ const Comment: NextPage<ICommentProps> = ({ language, changeLogin, loadComments 
 }
 
 const mapStateToProps = (state: IStateRedux) => ({ language: state.language.language });
-const mapDispatchToProps = ({ changeLogin, loadComments })
+const mapDispatchToProps = ({ changeLogin, loadComments, showSuccessMessage, showErrorMessage })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comment);

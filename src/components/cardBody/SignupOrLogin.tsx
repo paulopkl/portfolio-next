@@ -4,13 +4,14 @@ import { NextPage } from 'next';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import axios, { AxiosError } from 'axios';
-import { changeLogin, IChangeLogin, ILanguage, IShowErrorMessage, showErrorMessage } from '../../redux/action';
+import { changeLogin, IChangeLogin, ILanguage, IShowMessage, showErrorMessage, showSuccessMessage } from '../../redux/action';
 import { IStateRedux } from '../../redux/store';
 
 interface ISignupOrLoginProps {
     language: ILanguage;
     changeLogin: IChangeLogin;
-    showErrorMessage: IShowErrorMessage;
+    showErrorMessage: IShowMessage;
+    showSuccessMessage: IShowMessage;
 }
 
 interface IDataState {
@@ -169,7 +170,13 @@ const initialData: IDataState = {
     language: "Portuguese",
 }
 
-const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin, showErrorMessage }) => {
+const Spinner = () => (
+    <div className="spinner-border spinner-border-sm" role="status">
+        <span className="visually-hidden">Loading...</span>
+    </div>
+);
+
+const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin, showErrorMessage, showSuccessMessage }) => {
     const [open, setOpen] = useState<boolean>(false);
     const [signup, setSignup] = useState<boolean>(false);
     const [login, setLogin] = useState<boolean>(false);
@@ -191,6 +198,8 @@ const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin, s
 
             if (response?.data?.token) {
                 window.localStorage.setItem("token", response?.data?.token);
+
+                showSuccessMessage("User registered successfully!");
 
                 handleClose();
 
@@ -215,6 +224,8 @@ const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin, s
                         
             if (response?.data?.token) {
                 window.localStorage.setItem("token", response?.data?.token);
+
+                showSuccessMessage("User logged successfully!");
 
                 handleClose();
 
@@ -281,10 +292,8 @@ const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin, s
                     </InputSection>
                 </InputSignupContent>
                 <Button onClick={handleOnSignup} loading={loadingSignup} disabled={loadingSignup}>
-                    {loadingEnter 
-                        ? <div className="spinner-border spinner-border-sm" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                        </div>
+                    {loadingSignup 
+                        ? <Spinner />
                         : language === "English" ? "Create Account" : "Criar Conta"}
                 </Button>
             </SignupOrLoginWrapper>
@@ -322,10 +331,8 @@ const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin, s
                 <FlexAligned>
                     <Button onClick={handleOnLogin} loading={loadingEnter} disabled={loadingEnter}>
                         {loadingEnter 
-                            ? <div className="spinner-border spinner-border-sm" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                          </div>
-                          : language === "English" ? "Enter" : "Entrar" }
+                            ? <Spinner />
+                            : language === "English" ? "Enter" : "Entrar" }
                     </Button>
                 </FlexAligned>
             </SignupOrLoginWrapper>
@@ -387,6 +394,6 @@ const SignupOrLogin: NextPage<ISignupOrLoginProps> = ({ language, changeLogin, s
 }
 
 const mapStateToProps = (state: IStateRedux) => ({ language: state.language.language });
-const mapDispatchToProps = ({ changeLogin, showErrorMessage });
+const mapDispatchToProps = ({ changeLogin, showErrorMessage, showSuccessMessage });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupOrLogin);

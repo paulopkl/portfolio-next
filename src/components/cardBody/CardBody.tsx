@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { NextPage } from 'next';
 import React, { useEffect } from 'react';
 import { FaBrain, FaComment } from 'react-icons/fa';
@@ -6,7 +6,7 @@ import { GiOpenBook } from 'react-icons/gi';
 import { RiContactsFill } from 'react-icons/ri';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { changeLogin, IChangeLogin, ILanguage, ILoadComments, loadComments } from '../../redux/action';
+import { changeLogin, IChangeLogin, ILanguage, ILoadComments, IShowMessage, loadComments, showErrorMessage } from '../../redux/action';
 import { IRatings } from '../../redux/reducer';
 import { IStateRedux } from '../../redux/store';
 import CommentComponent from './Comment';
@@ -20,7 +20,12 @@ interface ICardBodyProps {
     isLogged?: boolean;
     changeLogin: IChangeLogin;
     comments: IRatings[];
-    loadComments: ILoadComments
+    loadComments: ILoadComments;
+    showErrorMessage: IShowMessage;
+}
+
+interface IHr {
+    width: string;
 }
 
 const Body = styled.div`
@@ -34,11 +39,7 @@ const Body = styled.div`
 
 const CommentsArea = styled.div`
     width: 82%;
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    @media(max-width: 766px) { width: 90%; } */
+    /* @media(max-width: 766px) { width: 90%; } */
 `;
 
 const CommentCount = styled.p`
@@ -68,7 +69,12 @@ const ContactsFill = styled(RiContactsFill)`
     margin-right: 15px;
 `;
 
-const CardBody: NextPage<ICardBodyProps> = ({ language, isLogged, comments, changeLogin, loadComments }) => {
+const Hr = styled.hr<IHr>`
+    width: ${({ width }) => width};
+    border: 1px solid #b2b2b2;
+`;
+
+const CardBody: NextPage<ICardBodyProps> = ({ language, isLogged, comments, changeLogin, loadComments, showErrorMessage }) => {
 
     useEffect(() => {
         loadData();
@@ -79,8 +85,10 @@ const CardBody: NextPage<ICardBodyProps> = ({ language, isLogged, comments, chan
             .then(res => {
                 loadComments(res.data);
             })
-            .catch(err => {
-
+            .catch((res: AxiosError) => {
+                if(res.response?.data.message) {
+                    showErrorMessage(res.response?.data.message);
+                }
             });
 
         const token = (localStorage.getItem("token") || "");
@@ -96,7 +104,7 @@ const CardBody: NextPage<ICardBodyProps> = ({ language, isLogged, comments, chan
                 Skills
             </Title>
             <Skills />
-            <hr style={{ width: "80%", border: "1px solid #b2b2b2" }} />
+            <Hr width={"80%"} />
             <Title>
                 <ContactsFill size={35} />
                 {language === "Portuguese" ? "Contato e redes sociais" : "Contact and social media"}
@@ -106,7 +114,7 @@ const CardBody: NextPage<ICardBodyProps> = ({ language, isLogged, comments, chan
                 ? <CommentComponent /> 
                 : <SignupOrLogin />}
             <CommentsArea>
-                <hr style={{ width: "100%", border: "1px solid #b2b2b2" }} />
+                <Hr width={"100%"} />
                 <CommentCount>
                     <Comment /> {language === "English" ? "Comments" : "Comentários"} ({ comments.length })
                 </CommentCount>
@@ -130,14 +138,6 @@ const mapStateToProps = (state: IStateRedux) => ({
     comments: state.comments.comments
 });
 
-const mapDispatchToProps = ({ changeLogin, loadComments });
-
-// export const getInitialProps = async (ctx: any) => {
-//     console.log("batata");
-    
-//     console.log({ ctx });
-    
-//     // await store.dispatch(loadComments());
-// };
+const mapDispatchToProps = ({ changeLogin, loadComments, showErrorMessage });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardBody);

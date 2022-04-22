@@ -166,9 +166,9 @@ const Links: NextPage<ILinksProps> = ({ language }) => {
     return (
         <ListLinks>
             <ListOption>
-                <Link href="/Main" passHref>
+                {/* <Link href="/Main" passHref> */}
                     <ClipsIcon size="50" />
-                </Link>
+                {/* </Link> */}
                 Portifólio
             </ListOption>
             <ListOption>

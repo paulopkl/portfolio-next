@@ -248,7 +248,7 @@ const MainComponent: NextPage<IMainComponentProps> = ({ language }) => {
                             ? <>SPA made with ReactJS and stylized with Styled-Components.</>
                             : <>SPA feito com ReactJS e estilizado com Styled-Components.</>}
                     </Paragraph>
-                    <hr/>
+                    <hr style={{ border: "1px solid #b2b2b2" }} />
                     <Paragraph>
                         {language === 'English' 
                             ? <>This portfolio will connect to a GitHub REST API, where you will be asked for the

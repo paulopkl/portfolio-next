@@ -20,11 +20,6 @@ const Header = styled.div`
     width: 45%;
 
     @media(max-width: 700px) { width: 80%; }
-
-    hr {
-        width: 100%;
-        border-bottom: 0px;
-    }
 `;
 
 const Name = styled.h1`
@@ -82,6 +77,11 @@ const BrIcon = styled(GiBrazil)`
     font-size: 2rem;
 `;
 
+const Hr = styled.hr`
+    width: 100%;
+    border: 1px solid #b2b2b2;
+`;
+
 const CardHeader: NextPage<ICardHeader> = ({ language }) => {
   return (
     <Header>
@@ -97,11 +97,11 @@ const CardHeader: NextPage<ICardHeader> = ({ language }) => {
             <LocationIcon size="30" />
             <Location>Campinas, São Paulo</Location>
         </Flex>
-        <hr />
+        <Hr />
         <Schooling />
-        <hr />
+        <Hr />
         <Description />
-        <hr />
+        <Hr />
     </Header>
   );
 }

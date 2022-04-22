@@ -6,7 +6,7 @@ export type ILanguage = "Portuguese" | "English";
 export type IChangeLanguage = (param: string) => { type: string, payload: string | boolean }
 export type IChangeLogin = (param: boolean) => { type: string, payload: string | boolean }
 export type ILoadComments = (param: IRatings[]) => { type: string, payload: IRatings[] }
-export type IShowErrorMessage = (param: string) => { type: string, payload: { type: string, message: string } }
+export type IShowMessage = (param: string) => { type: string, payload: { type: string, message: string } }
 export type ICleanMessage = () => { type: string }
 
 // Action Creator
@@ -33,7 +33,7 @@ const loadComments: ILoadComments = (payload) => {
 
 const cleanMessage: ICleanMessage = () => ({ type: CLEAN_MESSAGE });
 
-const showErrorMessage: IShowErrorMessage = (message) => {
+const showErrorMessage: IShowMessage = (message) => {
     return { 
         type: SHOW_MESSAGE, 
         payload: {
@@ -43,4 +43,14 @@ const showErrorMessage: IShowErrorMessage = (message) => {
     }
 };
 
-export { changeLanguage, changeLogin, loadComments, cleanMessage, showErrorMessage };
+const showSuccessMessage: IShowMessage = (message) => {
+    return { 
+        type: SHOW_MESSAGE, 
+        payload: {
+            type: "Success",
+            message
+        }
+    }
+};
+
+export { changeLanguage, changeLogin, loadComments, cleanMessage, showErrorMessage, showSuccessMessage };
