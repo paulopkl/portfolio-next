@@ -4,7 +4,7 @@ import { FaFlagUsa } from 'react-icons/fa';
 import { GiBrazilFlag } from 'react-icons/gi';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { IStateRedux } from '../../redux/store';
+import { IStateRedux } from '../../../redux/store';
 
 interface IFeedBackProps {
     author: string;

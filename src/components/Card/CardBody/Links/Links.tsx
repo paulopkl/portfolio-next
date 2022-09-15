@@ -9,8 +9,8 @@ import { FiInstagram } from 'react-icons/fi';
 import { GrLinkedinOption } from 'react-icons/gr';
 import { GoMarkGithub } from 'react-icons/go';
 import { HiDocumentReport } from 'react-icons/hi';
-import { ILanguage } from '../../../redux/action';
-import { IStateRedux } from '../../../redux/store';
+import { ILanguage } from '../../../../redux/action';
+import { IStateRedux } from '../../../../redux/store';
 
 interface ILinksProps {
     language: ILanguage,

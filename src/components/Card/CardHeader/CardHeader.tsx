@@ -6,8 +6,8 @@ import { GiBrazil } from 'react-icons/gi';
 import Description from './Description';
 import Schooling from './Schooling';
 import { NextPage } from 'next';
-import { IStateRedux } from '../../redux/store';
-import { ILanguage } from '../../redux/action';
+import { IStateRedux } from '../../../redux/store';
+import { ILanguage } from '../../../redux/action';
 
 interface ICardHeader {
     language: ILanguage,

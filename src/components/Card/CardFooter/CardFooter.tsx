@@ -5,8 +5,8 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { connect } from 'react-redux';
-import { IStateRedux } from '../../redux/store';
-import { ILanguage } from '../../redux/action';
+import { IStateRedux } from '../../../redux/store';
+import { ILanguage } from '../../../redux/action';
 import { NextPage } from 'next';
 
 interface ICardFooterProps {

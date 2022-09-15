@@ -3,8 +3,8 @@ import { NextPage } from 'next';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { changeLogin, IChangeLogin, ILanguage, ILoadComments, IShowMessage, loadComments, showErrorMessage, showSuccessMessage } from '../../redux/action';
-import { IStateRedux } from '../../redux/store';
+import { changeLogin, IChangeLogin, ILanguage, ILoadComments, IShowMessage, loadComments, showErrorMessage, showSuccessMessage } from '../../../redux/action';
+import { IStateRedux } from '../../../redux/store';
 
 interface ICommentProps {
     language: ILanguage;

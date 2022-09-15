@@ -4,8 +4,8 @@ import { NextPage } from 'next';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import axios, { AxiosError } from 'axios';
-import { changeLogin, IChangeLogin, ILanguage, IShowMessage, showErrorMessage, showSuccessMessage } from '../../redux/action';
-import { IStateRedux } from '../../redux/store';
+import { changeLogin, IChangeLogin, ILanguage, IShowMessage, showErrorMessage, showSuccessMessage } from '../../../redux/action';
+import { IStateRedux } from '../../../redux/store';
 
 interface ISignupOrLoginProps {
     language: ILanguage;
@@ -57,8 +57,6 @@ export const ButtonAnimated = styled.button`
 `;
 
 const Button = styled.button<IButton>`
-    
-
     transition: 1s;
     padding: 18px;
     margin: ${({ loading }) => loading ? "10px auto 0px auto" : "10px auto 10px auto"};

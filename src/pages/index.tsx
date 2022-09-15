@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
-import CardHeader from "../components/cardHeader/CardHeader";
-import CardBody from "../components/cardBody/CardBody";
-import CardFooter from "../components/cardFooter/CardFooter";
+import CardBody from "../components/Card/CardBody/CardBody";
 import Image from "next/image";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -15,6 +13,8 @@ import { IStateRedux } from "../redux/store";
 import Speaker from "../components/Speaker";
 import { FaHandPointLeft } from "react-icons/fa";
 import HandleMessage from "../components/HandleMessage";
+import CardHeader from "../components/Card/CardHeader/CardHeader";
+import CardFooter from "../components/Card/CardFooter/CardFooter";
 
 // Interfaces
 interface IMainComponentProps {

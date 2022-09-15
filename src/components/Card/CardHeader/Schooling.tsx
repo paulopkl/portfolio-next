@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { IoMdSchool } from 'react-icons/io';
 import { NextPage } from 'next';
-import { ILanguage } from '../../redux/action';
-import { IStateRedux } from '../../redux/store';
+import { ILanguage } from '../../../redux/action';
+import { IStateRedux } from '../../../redux/store';
 
 interface ISchoolingProps {
     language: ILanguage,
@@ -51,8 +51,8 @@ const Schooling: NextPage<ISchoolingProps> = ({ language }) => {
             <Name>
                 <SchoolText>
                     {language === 'Portuguese' 
-                        ? "Studying Computer Science at UNIP"
-                        : "Cursando Ciência da Computação na UNIP"}
+                        ? "Cursando Ciência da Computação na UNIP"
+                        : "Studying Computer Science at UNIP"}
                 </SchoolText>
             </Name>
         </div>
