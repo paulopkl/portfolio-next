@@ -2,8 +2,8 @@ import { NextPage } from 'next';
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { ILanguage } from '../../redux/action';
-import { IStateRedux } from '../../redux/store';
+import { ILanguage } from '../../../redux/action';
+import { IStateRedux } from '../../../redux/store';
 import { MdDescription } from "react-icons/md";
 
 interface IDescriptionProps {
